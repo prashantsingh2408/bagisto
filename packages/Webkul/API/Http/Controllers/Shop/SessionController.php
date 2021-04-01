@@ -47,28 +47,56 @@ class SessionController extends Controller
      */
     public function create()
     {
-        request()->validate([
-            'email'    => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $jwtToken = null;
-
-        if (! $jwtToken = auth()->guard($this->guard)->attempt(request()->only('email', 'password'))) {
-            return response()->json([
-                'error' => 'Invalid Email or Password',
-            ], 401);
+        try{
+            request()->validate([
+                'email'    => 'required|email',
+                'password' => 'required',
+            ]);
+    
+            $jwtToken = null;
+    
+            if (! $jwtToken = auth()->guard($this->guard)->attempt(request()->only('email', 'password'))) {
+                return response()->json([
+                    'result' => '', 'message' => 'Invalid Email or Password', 'response_code' => 200, 'status' => 1
+                ], 200);
+            }else {
+                Event::dispatch('customer.after.login', request('email'));
+    
+                $customer = auth($this->guard)->user();
+                return response()->json([
+                    'result' => $customer,
+                    'message' => 'Logged in successfully', 'response_code' => 200, 'status' => 1,
+                    'token'   => $jwtToken
+                ], 200);
+            }
+        
         }
+        catch(Exception $e)
+    	{
+    	    return \Response::json(['message' => 'error message', 'status' => 0, 'result' => $e->getMessage()], HttpResponse::HTTP_CONFLICT);
+    	}
+        // request()->validate([
+        //     'email'    => 'required|email',
+        //     'password' => 'required',
+        // ]);
 
-        Event::dispatch('customer.after.login', request('email'));
+        // $jwtToken = null;
 
-        $customer = auth($this->guard)->user();
+        // if (! $jwtToken = auth()->guard($this->guard)->attempt(request()->only('email', 'password'))) {
+        //     return response()->json([
+        //         'error' => 'Invalid Email or Password',
+        //     ], 401);
+        // }
 
-        return response()->json([
-            'token'   => $jwtToken,
-            'message' => 'Logged in successfully.',
-            'data'    => new CustomerResource($customer),
-        ]);
+        // Event::dispatch('customer.after.login', request('email'));
+
+        // $customer = auth($this->guard)->user();
+
+        // return response()->json([
+        //     'token'   => $jwtToken,
+        //     'message' => 'Logged in successfully.',
+        //     'data'    => new CustomerResource($customer),
+        // ]);
     }
 
     /**
