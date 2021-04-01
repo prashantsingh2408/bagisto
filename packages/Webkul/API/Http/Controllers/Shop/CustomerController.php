@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Event;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 
+use App\Exceptions\Handler;
 class CustomerController extends Controller
 {
     /**
@@ -48,7 +49,7 @@ class CustomerController extends Controller
     public function __construct(
         CustomerRepository $customerRepository,
         CustomerGroupRepository $customerGroupRepository
-    )   {
+    ) {
         $this->guard = request()->has('token') ? 'api' : 'customer';
 
         $this->_config = request('_config');
@@ -72,35 +73,102 @@ class CustomerController extends Controller
      */
     public function create(Request $request)
     {
-        $this->validate($request, [
-            'first_name' => 'required',
-            'last_name'  => 'required',
-            'email'      => 'email|required|unique:customers,email',
-            'password'   => 'confirmed|min:6|required',
-        ]);
+        // return response()->json([
+        //     'message' => 'Your account has been created successfully.',
+        // ]);
+        // $this->validate($request, [
+        //     'first_name' => 'required',
+        //     'last_name'  => 'required',
+        //     'email'      => 'email|required|unique:customers,email',
+        //     'password'   => 'confirmed|min:6|required',
+        // ]);
+
+        // $data = [
+        //     'first_name'  => $request->get('first_name'),
+        //     'last_name'   => $request->get('last_name'),
+        //     'email'       => $request->get('email'),
+        //     'password'    => $request->get('password'),
+        //     'password'    => bcrypt($request->get('password')),
+        //     'channel_id'  => core()->getCurrentChannel()->id,
+        //     'is_verified' => 1,
+        //     'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
+        // ];
+        $name = $request->get('name');
+        $name_array = explode(" ", $name);
+        $first_name = $name_array[0];
+
+        if(sizeof($name_array) >1){
+        $last_name = $name_array[1];
+        }
+
+        // return response()->json([
+        //     $first_name,
+        //     $last_name,
+        //     'message' => 'eixts account has been created successfully.',
+        //     "response_code" => "200",
+        //     "status" => "1",
+        // ]);
+
 
         $data = [
-            'first_name'  => $request->get('first_name'),
-            'last_name'   => $request->get('last_name'),
+            'first_name'  => $first_name,
+            'last_name'  => $last_name,
+            'phone'   => $request->get('mobile'),
             'email'       => $request->get('email'),
             'password'    => $request->get('password'),
-            'password'    => bcrypt($request->get('password')),
-            'channel_id'  => core()->getCurrentChannel()->id,
-            'is_verified' => 1,
-            'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
+
+            // 'password'    => bcrypt($request->get('password')),
+            // 'channel_id'  => core()->getCurrentChannel()->id,
+            // 'is_verified' => 1,
+            // 'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
         ];
 
+        $data_return = [
+            'name'  => $name,
+            'phone'   => $request->get('mobile'),
+            'email'       => $request->get('email'),
+            'password'    => $request->get('password'),
+
+            // 'password'    => bcrypt($request->get('password')),
+            // 'channel_id'  => core()->getCurrentChannel()->id,
+            // 'is_verified' => 1,
+            // 'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
+        ];
+        // try{
         Event::dispatch('customer.registration.before');
 
-        $customer = $this->customerRepository->create($data);
+        $customer = $this->customerRepository->firstOrCreate($data);
+
+
 
         Event::dispatch('customer.registration.after', $customer);
+        // }
+        // catch(Exception $e){
+            // return response()->json([
+            //     'results' => $data_return,
+            //     'message' => 'eixts account has been created successfully.',
+            //     "response_code" => "200",
+            //     "status" => "1",
+            // ]);
 
+        // }
+
+        if($customer->status == 1){
+            return response()->json([
+                'results' => $data_return,
+                'message' => 'Your account already exists.',
+                "response_code" => "200",
+                "status" => "1",
+            ]);
+        }
         return response()->json([
+            'results'=> $data_return,
             'message' => 'Your account has been created successfully.',
+            "response_code" => "200",
+            "status" => "1",
         ]);
     }
-    
+
     /**
      * Method to store user's sign up form data to DB.
      *
@@ -134,9 +202,12 @@ class CustomerController extends Controller
 
         return response()->json([
             'message' => 'Your account has been created successfully.',
+            "message" => "Login  successfuly!",
+            "response_code" => "200",
+            "status" => "1",
         ]);
     }
-    
+
 
     /**
      * Returns a current user data.

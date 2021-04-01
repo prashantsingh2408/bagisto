@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Api;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,3 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::group(
+    ['prefix' => 'api'],
+    function ($router) {
+
+        Route::post('customer/registerMobile', 'CustomerController@createMobile');
+    }
+);
