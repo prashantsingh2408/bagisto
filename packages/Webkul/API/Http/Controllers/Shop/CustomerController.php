@@ -115,9 +115,9 @@ class CustomerController extends Controller
             'last_name'  => $last_name,
             'phone'   => $request->get('mobile'),
             'email'       => $request->get('email'),
-            'password'    => $request->get('password'),
+            //'password'    => $request->get('password'),
 
-            // 'password'    => bcrypt($request->get('password')),
+             'password'    => bcrypt($request->get('password')),
             // 'channel_id'  => core()->getCurrentChannel()->id,
             // 'is_verified' => 1,
             // 'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
