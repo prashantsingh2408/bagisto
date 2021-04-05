@@ -43,7 +43,11 @@ class ProductController extends Controller
 
             //fetch all product by category_id (bagisto code)
         	$products = ProductResource::collection($this->productRepository->getAll(request()->input('category_id')));
-            var_dump($products);
+//<<<<<<< HEAD
+            //dd($products);
+// =======
+//             dd($products);
+// >>>>>>> 0d12c96fc0dc71f21cfd0dbd91102314e2c7e4fe
 
 
 
@@ -56,6 +60,7 @@ class ProductController extends Controller
             $discount_array = array();
             foreach ($products as $product){
 
+// <<<<<<< HEAD
 
                 //Fetch category
                 $description = $product->description;
@@ -69,6 +74,8 @@ class ProductController extends Controller
                 }
                 //END Get category
 
+// =======
+// >>>>>>> 0d12c96fc0dc71f21cfd0dbd91102314e2c7e4fe
                 if($product->special_price != null){
                     //dd($product->special_price);
                     $discount = $product->price - $product->special_price;
@@ -81,6 +88,10 @@ class ProductController extends Controller
                 $name = $product->name;
                 $price = $product->price;
                 $image = $products[0]->images[0]->path;
+// <<<<<<< HEAD
+                $image = "http://shopstorage.webdevelopmentagency.in/app/public/". $image;
+// =======
+// >>>>>>> 0d12c96fc0dc71f21cfd0dbd91102314e2c7e4fe
 
                 // $special_attribute_id = 13;
                 // $actual_attribute_id  = 12;//Id of special price
@@ -115,7 +126,11 @@ class ProductController extends Controller
 
 
 
-                $product2 = array("id"=>$product_id, "name"=>$name, "price"=>$price,"discount"=>$discount,"category"=> $category);
+// <<<<<<< HEAD
+                $product2 = array("id"=>$product_id, "name"=>$name, "price"=>$price,"discount"=>$discount,"image"=>$image,"category"=> $category);
+// =======
+//                 $product2 = array("id"=>$product_id, "name"=>$name, "price"=>$price,"discount"=>$discount);
+// >>>>>>> 0d12c96fc0dc71f21cfd0dbd91102314e2c7e4fe
 
                 array_push($products2,$product2);
 
