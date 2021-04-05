@@ -93,13 +93,16 @@ class CustomerController extends Controller
         //     'is_verified' => 1,
         //     'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
         // ];
-        $name = $request->get('name');
-        $name_array = explode(" ", $name);
-        $first_name = $name_array[0];
+        // $first_name = $request->get("first_name");
+        // $last_name   = $request->get('last_name');
 
-        if(sizeof($name_array) >1){
-        $last_name = $name_array[1];
-        }
+        //dd($name);
+        // if(sizeof($name_array) >1){
+        //     $last_name = $name_array[1];
+        // }
+        // else{
+        //     $last_name = "";
+        // }
 
         // return response()->json([
         //     $first_name,
@@ -111,23 +114,24 @@ class CustomerController extends Controller
 
 
         $data = [
-            'first_name'  => $first_name,
-            'last_name'  => $last_name,
+            'first_name'  => $request->get('first_name'),
+            'last_name'  => $request->get('last_name'),
             'phone'   => $request->get('mobile'),
             'email'       => $request->get('email'),
-            //'password'    => $request->get('password'),
-
-             'password'    => bcrypt($request->get('password')),
+            'password'    => bcrypt($request->get('password')),
+            'token'=> "Authorization",
             // 'channel_id'  => core()->getCurrentChannel()->id,
             // 'is_verified' => 1,
             // 'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
         ];
 
         $data_return = [
-            'name'  => $name,
+            'first_name'  => $request->get('first_name'),
+            'last_name'  => $request->get('last_name'),
             'phone'   => $request->get('mobile'),
             'email'       => $request->get('email'),
             'password'    => $request->get('password'),
+            'token' => "Authorization",
 
             // 'password'    => bcrypt($request->get('password')),
             // 'channel_id'  => core()->getCurrentChannel()->id,

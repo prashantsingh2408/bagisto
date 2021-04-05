@@ -43,7 +43,7 @@ class ProductController extends Controller
 
             //fetch all product by category_id (bagisto code)
         	$products = ProductResource::collection($this->productRepository->getAll(request()->input('category_id')));
-            dd($products);
+            var_dump($products);
 
 
 
@@ -55,6 +55,19 @@ class ProductController extends Controller
             //$special_cost_array = array();
             $discount_array = array();
             foreach ($products as $product){
+
+
+                //Fetch category
+                $description = $product->description;
+                $category = DB::select('select name from category_translations where description = ?', [$description]);
+                //dd($category);
+                if(isset($category[0]->name)){
+                $category = $category[0]->name;
+                }
+                else{
+                    $category ='not any category';
+                }
+                //END Get category
 
                 if($product->special_price != null){
                     //dd($product->special_price);
@@ -102,7 +115,7 @@ class ProductController extends Controller
 
 
 
-                $product2 = array("id"=>$product_id, "name"=>$name, "price"=>$price,"discount"=>$discount);
+                $product2 = array("id"=>$product_id, "name"=>$name, "price"=>$price,"discount"=>$discount,"category"=> $category);
 
                 array_push($products2,$product2);
 
