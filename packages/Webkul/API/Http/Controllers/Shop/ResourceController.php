@@ -2,6 +2,8 @@
 
 namespace Webkul\API\Http\Controllers\Shop;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 
 class ResourceController extends Controller
@@ -99,6 +101,22 @@ class ResourceController extends Controller
         return new $this->_config['resource']($query);
     }
 
+    //Custom function
+    public function sliderget(){
+
+        $slider_array = DB::select("select * from sliders");
+        $slider_array_updated = array();
+        foreach($slider_array as $slider){
+           // dd($slider->path);
+            array_push($slider_array_updated, "http://shopstorage.webdevelopmentagency.in/app/public/". $slider->path);
+        }
+        // dd($slider_array_updated);
+
+        return response()->json([
+            'result' => $slider_array_updated,
+            'message' => 'slider data fetch', 'response_code' => 200, 'status' => 1,
+        ], 200);
+    }
     /**
      * Delete's a individual resource.
      *
@@ -115,4 +133,6 @@ class ResourceController extends Controller
             'message' => 'Item removed successfully.',
         ]);
     }
+
+
 }

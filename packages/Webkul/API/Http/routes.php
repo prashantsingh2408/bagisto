@@ -121,6 +121,8 @@ Route::group(['prefix' => 'api'], function ($router) {
             'resource' => 'Webkul\API\Http\Resources\Core\Slider'
         ]);
 
+        Route::get('slidersget', 'ResourceController@sliderget');
+
         Route::get('sliders/{id}', 'ResourceController@get')->defaults('_config', [
             'repository' => 'Webkul\Core\Repositories\SliderRepository',
             'resource' => 'Webkul\API\Http\Resources\Core\Slider'
