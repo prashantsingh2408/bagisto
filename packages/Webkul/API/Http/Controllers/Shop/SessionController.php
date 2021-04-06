@@ -52,16 +52,16 @@ class SessionController extends Controller
                 'email'    => 'required|email',
                 'password' => 'required',
             ]);
-    
+
             $jwtToken = null;
-    
+
             if (! $jwtToken = auth()->guard($this->guard)->attempt(request()->only('email', 'password'))) {
                 return response()->json([
                     'result' => '', 'message' => 'Invalid Email or Password', 'response_code' => 200, 'status' => 1
                 ], 200);
             }else {
                 Event::dispatch('customer.after.login', request('email'));
-    
+
                 $customer = auth($this->guard)->user();
                 return response()->json([
                     'result' => $customer,
@@ -69,7 +69,7 @@ class SessionController extends Controller
                     'token'   => $jwtToken
                 ], 200);
             }
-        
+
         }
         catch(Exception $e)
     	{
@@ -120,8 +120,8 @@ class SessionController extends Controller
      */
     public function update()
     {
+        //dd(1);
         $customer = auth($this->guard)->user();
-
         $this->validate(request(), [
             'first_name'    => 'required',
             'last_name'     => 'required',
