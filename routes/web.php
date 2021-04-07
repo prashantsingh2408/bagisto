@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,5 +12,21 @@
 |
 */
 
-//Route::get("/api/sliderget","ResourceController@sliderget");
-//Route::post("/api/sliderget","ResourceController@sliderget");
+
+//smart registration
+Route::view('smart-registration','smart/smart-registration');
+
+//Bug : Route does not direct controller
+//So controller code are put in route function
+
+Route::post('smart-singup', function(Request $request){
+
+    //Registration
+    //Save to db
+    echo $request->name;
+
+
+});
+
+//if user refresh 'smart-singup' page
+Route::view('smart-singup', 'smart/smart-registration');
