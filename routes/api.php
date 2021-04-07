@@ -18,5 +18,7 @@ Route::group(
     function ($router) {
 
         Route::post('customer/registerMobile', 'CustomerController@createMobile');
+        Route::get('slidersget', 'ResourceController@sliderget');
     }
 );
+Route::get('/api/sliderget','ResourceController@sliderget');

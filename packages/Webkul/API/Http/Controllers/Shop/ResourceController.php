@@ -59,31 +59,49 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        $query = $this->repository->scopeQuery(function($query) {
-            if (isset($this->_config['authorization_required']) && $this->_config['authorization_required']) {
-                $query = $query->where('customer_id', auth()->user()->id );
-            }
-
-            foreach (request()->except(['page', 'limit', 'pagination', 'sort', 'order', 'token']) as $input => $value) {
-                $query = $query->whereIn($input, array_map('trim', explode(',', $value)));
-            }
-
-            if ($sort = request()->input('sort')) {
-                $query = $query->orderBy($sort, request()->input('order') ?? 'desc');
-            } else {
-                $query = $query->orderBy('id', 'desc');
-            }
-
-            return $query;
-        });
-
-        if (is_null(request()->input('pagination')) || request()->input('pagination')) {
-            $results = $query->paginate(request()->input('limit') ?? 10);
-        } else {
-            $results = $query->get();
+        //custom code 
+        
+              $slider_array = DB::select("select * from sliders");
+        $slider_array_updated = array();
+        foreach($slider_array as $slider){
+           // dd($slider->path);
+            array_push($slider_array_updated, "http://shopstorage.webdevelopmentagency.in/app/public/". $slider->path);
         }
+        // dd($slider_array_updated);
 
-        return $this->_config['resource']::collection($results);
+        return response()->json([
+            'result' => $slider_array_updated,
+            'message' => 'slider data fetch', 'response_code' => 200, 'status' => 1,
+        ], 200);
+        
+        
+        
+        //Bagisto  framework code 
+        // $query = $this->repository->scopeQuery(function($query) {
+        //     if (isset($this->_config['authorization_required']) && $this->_config['authorization_required']) {
+        //         $query = $query->where('customer_id', auth()->user()->id );
+        //     }
+
+        //     foreach (request()->except(['page', 'limit', 'pagination', 'sort', 'order', 'token']) as $input => $value) {
+        //         $query = $query->whereIn($input, array_map('trim', explode(',', $value)));
+        //     }
+
+        //     if ($sort = request()->input('sort')) {
+        //         $query = $query->orderBy($sort, request()->input('order') ?? 'desc');
+        //     } else {
+        //         $query = $query->orderBy('id', 'desc');
+        //     }
+
+        //     return $query;
+        // });
+
+        // if (is_null(request()->input('pagination')) || request()->input('pagination')) {
+        //     $results = $query->paginate(request()->input('limit') ?? 10);
+        // } else {
+        //     $results = $query->get();
+        // }
+
+        // return $this->_config['resource']::collection($results);
     }
 
     /**
