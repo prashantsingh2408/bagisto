@@ -1,4 +1,3 @@
-use App\Http\Controllers\MyController;
 
 <?php
 
@@ -122,7 +121,7 @@ Route::group(['prefix' => 'api'], function ($router) {
             'repository' => 'Webkul\Core\Repositories\SliderRepository',
             'resource' => 'Webkul\API\Http\Resources\Core\Slider'
         ]);
-        
+
         //Route::get('sliderget','ResourceController@slider');
 
         // Route::get('slidersget', 'ResourceController@sliderget');

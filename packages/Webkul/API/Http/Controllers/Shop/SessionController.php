@@ -5,6 +5,9 @@ namespace Webkul\API\Http\Controllers\Shop;
 use Illuminate\Support\Facades\Event;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 
 class SessionController extends Controller
 {
@@ -118,32 +121,57 @@ class SessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(Request $request)
     {
-        //dd(1);
+        // dd($request->password);
         $customer = auth($this->guard)->user();
-        $this->validate(request(), [
-            'first_name'    => 'required',
-            'last_name'     => 'required',
-            'gender'        => 'required',
-            'date_of_birth' => 'nullable|date|before:today',
-            'email'         => 'email|unique:customers,email,' . $customer->id,
-            'password'      => 'confirmed|min:6',
-        ]);
+
+        // $this->validate(request(), [
+        //     'first_name'    => 'required',
+        //     'last_name'     => 'required',
+        //     'gender'        => 'required',
+        //     'date_of_birth' => 'nullable|date|before:today',
+        //     'email'         => 'email|unique:customers,email,' . $customer->id,
+        //     'password'      => 'confirmed|min:6',
+        // ]);
+
 
         $data = request()->only('first_name', 'last_name', 'gender', 'date_of_birth', 'email', 'password');
-
+        // dd($data);
         if (! isset($data['password']) || ! $data['password']) {
             unset($data['password']);
         } else {
+            $dataWithOutBcrypt = $data['password']; //custom code
             $data['password'] = bcrypt($data['password']);
         }
 
+
+        // custom code
+        $first_name = $data['first_name'];
+        $last_name = $data['last_name'];
+        $email = $data['email'];
+        $password = $dataWithOutBcrypt;
+
+        //response data
+        $data_response = array(
+                            "first_name" => $first_name,
+                            "last_name" => $last_name,
+                            "email" => $email,
+                             "password" =>  $dataWithOutBcrypt);
+        //dd($data_response);
+
         $updatedCustomer = $this->customerRepository->update($data, $customer->id);
+
+        //custom code
+        $data = new CustomerResource($updatedCustomer);
+        //dd($data);
+        //END custom code
+
 
         return response()->json([
             'message' => 'Your account has been updated successfully.',
-            'data'    => new CustomerResource($updatedCustomer),
+            //'data'    => new CustomerResource($updatedCustomer),
+            'data' => $data_response
         ]);
     }
 

@@ -59,8 +59,8 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        //custom code 
-        
+        //custom code
+
               $slider_array = DB::select("select * from sliders");
         $slider_array_updated = array();
         foreach($slider_array as $slider){
@@ -73,10 +73,10 @@ class ResourceController extends Controller
             'result' => $slider_array_updated,
             'message' => 'slider data fetch', 'response_code' => 200, 'status' => 1,
         ], 200);
-        
-        
-        
-        //Bagisto  framework code 
+
+
+
+        //Bagisto  framework code
         // $query = $this->repository->scopeQuery(function($query) {
         //     if (isset($this->_config['authorization_required']) && $this->_config['authorization_required']) {
         //         $query = $query->where('customer_id', auth()->user()->id );
