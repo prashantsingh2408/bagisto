@@ -155,7 +155,7 @@ Route::group(['prefix' => 'api'], function ($router) {
 
         Route::get('customer/get', 'SessionController@get');
 
-        Route::put('customer/profile', 'SessionController@update');
+        Route::post('customer/profile', 'SessionController@update');
 
         Route::post('customer/register', 'CustomerController@create');
         Route::post('customer/registerMobile', 'CustomerController@createMobile');
