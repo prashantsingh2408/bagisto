@@ -14,19 +14,22 @@ use Illuminate\Http\Request;
 
 
 //smart registration
-Route::view('smart-registration','smart/smart-registration');
+Route::get('mlm-registration',function(){
+    return view('mlm-registration');
+});
 
 //Bug : Route does not direct controller
 //So controller code are put in route function
 
-Route::post('smart-singup', function(Request $request){
+// Route::post('smart-singup', function(Request $request){
 
-    //Registration
-    //Save to db
-    echo $request->name;
+//     //Registration
+//     //Save to db
+//     echo $request->name;
 
 
-});
+// });
 
 //if user refresh 'smart-singup' page
-Route::view('smart-singup', 'smart/smart-registration');
+// Route::view('smart-singup', 'smart/smart-registration');
+

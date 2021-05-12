@@ -37,7 +37,7 @@
                         @submit.prevent="onSubmit">
 
                         {{ csrf_field() }}
-
+         
                         {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
 
                         <div class="control-group" :class="[errors.has('first_name') ? 'has-error' : '']">
