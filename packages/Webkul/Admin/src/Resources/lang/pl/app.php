@@ -419,7 +419,10 @@ return [
             'print' => 'Drukuj',
             'order-date' => 'Data zamówienia',
             'creation-error' => 'Tworzenie faktury za zamówienie jest niedozwolone.',
-            'product-error' => 'Faktury nie można utworzyć bez produktów.'
+            'product-error' => 'Faktury nie można utworzyć bez produktów.',
+            'status-overdue' => 'Overdue',
+            'status-pending' => 'Pending Payment',
+            'status-paid'    => 'Paid',
         ],
 
         'shipments' => [
@@ -862,7 +865,9 @@ return [
             'update-success' => 'Element suwaka pomyślnie zaktualizowany',
             'update-fail' => 'Nie można zaktualizować suwaka',
             'delete-success' => 'Nie można usunąć ostatniego elementu lidera',
-            'delete-fail' => 'Element suwaka został pomyślnie usunięty'
+            'delete-fail' => 'Element suwaka został pomyślnie usunięty',
+            'expired-at'  => 'Expire Date',
+            'sort-order'  => 'Sort Order'
         ],
 
         'tax-categories' => [
@@ -1405,9 +1410,13 @@ return [
             'weight-unit' => 'Jednostka wagi',
             'email-settings'    => 'Ustawienia e-mail',
             'email-sender-name' => 'Email Sender Name',
+            'email-sender-name-tip' => 'This name will be displayed in the customers inbox',
             'shop-email-from'   => 'Adres e-mail sklepu [do wysyłania wiadomości e-mail]',
+            'shop-email-from-tip' => 'The email address of this channel to send emails to your customers',
             'admin-name'    => 'Nazwa administratora',
+            'admin-name-tip'  => 'This name will be displayed in all admin emails',
             'admin-email' => 'Admin Email',
+            'admin-email-tip' => 'The email address of the admin for this channel to receive emails',
             'admin-page-limit' => 'Domyślne elementy na stronę (administratora)',
             'design' => 'Projekt',
             'admin-logo' => 'Logo administratora',
@@ -1461,7 +1470,12 @@ return [
             'client-secret-info' => 'Add your secret key here',
             'accepted-currencies' => 'Accepted currencies',
             'accepted-currencies-info' => 'Add currency code comma seperated e.g. USD,INR,...',
-            'buy-now-button-display' => 'Allow customers to directly buy products'
+            'buy-now-button-display' => 'Allow customers to directly buy products',
+            'width' => 'Width',
+            'height' => 'Height',
+            'cache-small-image' => 'Small Image',
+            'cache-medium-image' => 'Medium Image',
+            'cache-large-image' => 'Large Image',
        ]
     ]
 ];

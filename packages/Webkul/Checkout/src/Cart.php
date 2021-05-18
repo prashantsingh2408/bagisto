@@ -692,7 +692,7 @@ class Cart
                     }
 
                     if (! $rate->is_zip) {
-                        if ($rate->zip_code == '*' || $rate->zip_code == $address->postcode) {
+                        if (empty($rate->zip_code) || in_array($rate->zip_code, ['*', $address->postcode])) {
                             $haveTaxRate = true;
                         }
                     } else {
@@ -963,7 +963,7 @@ class Cart
         }
 
         if (! $wishlistItem->additional) {
-            $wishlistItem->additional = ['product_id' => $wishlistItem->product_id];
+            $wishlistItem->additional = ['product_id' => $wishlistItem->product_id, 'quantity' => 1];
         }
 
         request()->merge($wishlistItem->additional);
@@ -1180,6 +1180,8 @@ class Cart
         array $shippingAddress
     ): void
     {
+        $shippingAddress['cart_id'] =  $billingAddress['cart_id'] = NULL;
+
         if (isset($data['billing']['save_as_address']) && $data['billing']['save_as_address']) {
             $this->customerAddressRepository->create($billingAddress);
         }
