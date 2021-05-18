@@ -420,7 +420,10 @@ return [
             'print' => 'اطبع',
             'order-date' => 'تاريخ الطلب',
             'creation-error' => 'لا يسمح بإنشاء الفواتير.',
-            'product-error' => 'ولا يمكن إعداد الفاتورة بدون منتجات.'
+            'product-error' => 'ولا يمكن إعداد الفاتورة بدون منتجات.',
+            'status-overdue' => 'Overdue',
+            'status-pending' => 'Pending Payment',
+            'status-paid'    => 'Paid',
         ],
 
         'shipments' => [
@@ -862,7 +865,9 @@ return [
             'update-success' => 'تم تحديث عنصر المزلق بنجاح',
             'update-fail' => 'المنزلق لا يمكن تحديثه',
             'delete-success' => 'لا يستطيع حذف الأخير عنصر',
-            'delete-fail' => 'تم حذف عنصر المزلق بنجاح'
+            'delete-fail' => 'تم حذف عنصر المزلق بنجاح',
+            'expired-at'  => 'Expire Date',
+            'sort-order'  => 'Sort Order'
         ],
 
         'tax-categories' => [
@@ -1410,9 +1415,13 @@ return [
             'design' => 'التصميم',
             'email-settings'    => 'إعدادات البريد الإلكتروني',
             'email-sender-name' => 'اسم مرسل البريد الإلكتروني',
+            'email-sender-name-tip' => 'This name will be displayed in the customers inbox',
             'shop-email-from'   => 'متجر عنوان البريد الإلكتروني [لإرسال رسائل البريد الإلكتروني]',
+            'shop-email-from-tip' => 'The email address of this channel to send emails to your customers',
             'admin-name'    => 'اسم المسؤول',
+            'admin-name-tip' => 'This name will be displayed in all admin emails',
             'admin-email' => 'البريد الإلكتروني للمسؤول',
+            'admin-email-tip' => 'The email address of the admin for this channel to receive emails',
             'admin-logo' => 'شعار المسؤول',
             'logo-image' => 'صورة الشعار',
             'credit-max' => 'الحد الأقصى لائتمان العميل',
@@ -1480,7 +1489,12 @@ return [
             'client-secret-info' => 'Add your secret key here',
             'accepted-currencies' => 'Accepted currencies',
             'accepted-currencies-info' => 'Add currency code comma seperated e.g. USD,INR,...',
-            'buy-now-button-display' => 'Allow customers to directly buy products'
+            'buy-now-button-display' => 'Allow customers to directly buy products',
+            'width' => 'Width',
+            'height' => 'Height',
+            'cache-small-image' => 'Small Image',
+            'cache-medium-image' => 'Medium Image',
+            'cache-large-image' => 'Large Image',
         ]
     ]
 ];

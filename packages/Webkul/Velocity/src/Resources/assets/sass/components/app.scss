@@ -31,7 +31,7 @@
         > div {
             &.row {
                 padding-bottom: 30px;
-                display: inline-block;
+                display: block;
             }
         }
     }
@@ -2360,8 +2360,7 @@
 
 .pagination {
     width: 100%;
-    display: block;
-
+    
     .page-item {
         padding: 0 10px;
 
@@ -2643,6 +2642,10 @@
             margin-right: 10px;
         }
     }
+}
+
+.filtered-tags {
+    margin-bottom: 20px;
 }
 
 @keyframes spin {

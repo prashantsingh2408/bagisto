@@ -12,6 +12,11 @@ return [
             'delete-category-product' => 'The selected categories contains products. Performing this action will remove the related products. Do you really want to perform this action?'
         ],
 
+        'error' => [
+            'multiple-sort-keys-error' => 'Fatal Error! Multiple sort keys found, please resolve the URL manually',
+            'multiple-search-keys-error' => 'Multiple search keys found, please resolve the URL manually',
+        ],
+
         'zero-index' => 'Index columns can have values greater than zero only',
         'no-records' => 'Er zijn geen gegevens gevonden',
         'filter-fields-missing' => 'Some of the required field is null, please check column, condition and value properly',
@@ -36,6 +41,9 @@ return [
         'items-per-page' => 'Items per pagina',
         'value-here' => 'Waarde hier',
         'numeric-value-here' => 'Numerieke waarde hier',
-        'submit' => 'Submit'
+        'submit' => 'Submit',
+        'edit' => 'Edit',
+        'delete' => 'Delete',
+        'view' => 'View',
     ]
 ];

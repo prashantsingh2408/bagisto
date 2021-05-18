@@ -409,28 +409,31 @@ return [
         ],
 
         'invoices' => [
-            'title'          => 'Invoices',
-            'id'             => 'Id',
-            'invoice'        => 'Invoice',
-            'invoice-id'     => 'Invoice Id',
-            'date'           => 'Invoice Date',
-            'order-id'       => 'Order Id',
-            'customer-name'  => 'Customer Name',
-            'status'         => 'Status',
-            'amount'         => 'Amount',
-            'action'         => 'Action',
-            'add-title'      => 'Create Invoice',
-            'save-btn-title' => 'Save Invoice',
-            'qty'            => 'Qty',
-            'qty-ordered'    => 'Qty Ordered',
-            'qty-to-invoice' => 'Qty to Invoice',
-            'view-title'     => 'Invoice #:invoice_id',
-            'bill-to'        => 'Bill to',
-            'ship-to'        => 'Ship to',
-            'print'          => 'Print',
-            'order-date'     => 'Order Date',
-            'creation-error' => 'Order invoice creation is not allowed.',
-            'product-error'  => 'Invoice can not be created without products.'
+            'title'                  => 'Invoices',
+            'id'                     => 'Id',
+            'invoice'                => 'Invoice',
+            'invoice-id'             => 'Invoice Id',
+            'date'                   => 'Invoice Date',
+            'order-id'               => 'Order Id',
+            'customer-name'          => 'Customer Name',
+            'status'                 => 'Status',
+            'amount'                 => 'Amount',
+            'action'                 => 'Action',
+            'add-title'              => 'Create Invoice',
+            'save-btn-title'         => 'Save Invoice',
+            'qty'                    => 'Qty',
+            'qty-ordered'            => 'Qty Ordered',
+            'qty-to-invoice'         => 'Qty to Invoice',
+            'view-title'             => 'Invoice #:invoice_id',
+            'bill-to'                => 'Bill to',
+            'ship-to'                => 'Ship to',
+            'print'                  => 'Print',
+            'order-date'             => 'Order Date',
+            'creation-error'         => 'Order invoice creation is not allowed.',
+            'product-error'          => 'Invoice can not be created without products.',
+            'status-overdue'         => 'Overdue',
+            'status-pending'         => 'Pending Payment',
+            'status-paid'            => 'Paid',
         ],
 
         'shipments' => [
@@ -871,7 +874,9 @@ return [
             'update-success'  => 'Slider item successfully updated',
             'update-fail'     => 'Slider cannot be updated',
             'delete-success'  => 'Cannot delete last slider item',
-            'delete-fail'     => 'Slider item successfully deleted'
+            'delete-fail'     => 'Slider item successfully deleted',
+            'expired-at'      => 'Expire Date',
+            'sort-order'      => 'Sort Order',
         ],
 
         'tax-categories' => [
@@ -929,7 +934,7 @@ return [
     ],
 
     'customers' => [
-        'groups' =>[
+        'groups' => [
             'add-title'       => 'Add Group',
             'edit-title'      => 'Edit Group',
             'save-btn-title'  => 'Save Group',
@@ -1027,9 +1032,17 @@ return [
             'is_subscribed'  => 'Subscribed',
             'edit-btn-title' => 'Update Subscriber',
             'update-success' => 'Subscriber was successfully updated',
+            'update-failed' => 'Error! You cannot unsubscribe the subscriber',
+            'delete' => 'Subscriber was successfully deleted',
+            'delete-failed' => 'Error! Subscriber cannot be deleted',
             'update-failed'  => 'Error! You cannot unsubscribe the subscriber',
             'delete'         => 'Subscriber was successfully deleted',
             'delete-failed'  => 'Error! Subscriber cannot be deleted'
+        ],
+
+        'orders' => [
+            'list'  => ':customer_name\'s orders List',
+            'title' => 'Orders'
         ]
     ],
 
@@ -1348,16 +1361,16 @@ return [
             'email'              => 'Email',
             'notification_label' => 'Notifications',
             'notifications' => [
-                'verification'         => 'Send verification E-mail',
-                'registration'         => 'Send registration E-mail',
-                'customer'             => 'Send customer E-mail',
-                'new-order'            => 'Send Order Confirmation E-mail',
-                'new-admin'            => 'Send Admin Invitation E-mail',
-                'new-invoice'          => 'Send Invoice Confirmation E-mail',
-                'new-refund'           => 'Send Refund Notification E-mail',
-                'new-shipment'         => 'Send Shipment Notification E-mail',
-                'new-inventory-source' => 'Send Inventory Source Notification E-mail',
-                'cancel-order'         => 'Send cancel Order Notification E-mail',
+                'verification'         => 'Send a verification e-mail after customer registration',
+                'registration'         => 'Send a confirmation e-mail after customer registration',
+                'customer'             => 'Send the customer account credentials after registration',
+                'new-order'            => 'Send a confirmation email to the customer after placing a new order',
+                'new-admin'            => 'Send a confirmation email to the admin after placing a new order',
+                'new-invoice'          => 'Send a notification e-mail after creating a new invoice',
+                'new-refund'           => 'Send a notification e-mail after creating a refund',
+                'new-shipment'         => 'Send a notification e-mail after creating a shipment',
+                'new-inventory-source' => 'Send a notification e-email after creating a new inventory source',
+                'cancel-order'         => 'Send a notification after canceling an order'
             ],
 
         ],
@@ -1417,9 +1430,13 @@ return [
             'weight-unit'               => 'Weight Unit',
             'email-settings'            => 'Email Settings',
             'email-sender-name'         => 'Email Sender Name',
-            'shop-email-from'           => 'Shop Email Address [For sending emails]',
+            'email-sender-name-tip'     => 'This name will be displayed in the customers inbox',
+            'shop-email-from'           => 'Shop Email Address',
+            'shop-email-from-tip'       => 'The email address of this channel to send emails to your customers',
             'admin-name'                => 'Admin Name',
+            'admin-name-tip'            => 'This name will be displayed in all admin emails',
             'admin-email'               => 'Admin Email',
+            'admin-email-tip'           => 'The email address of the admin for this channel to receive emails',
             'admin-page-limit'          => 'Default Items Per Page (Admin)',
             'design'                    => 'Design',
             'admin-logo'                => 'Admin Logo',
@@ -1481,12 +1498,17 @@ return [
             'client-secret'             => 'Client Secret',
             'client-secret-info'        => 'Add your secret key here',
             'accepted-currencies'       => 'Accepted currencies',
-            'accepted-currencies-info'      => 'Add currency code comma seperated e.g. USD,INR,...',
-            'buy-now-button-display'        => 'Allow customers to directly buy products',
-            'order-number-generator-class'  => 'Order Number Generator',
-            'show-search-input-field'       => 'Show Search Input Field',
+            'accepted-currencies-info'              => 'Add currency code comma seperated e.g. USD,INR,...',
+            'buy-now-button-display'                => 'Allow customers to directly buy products',
+            'order-number-generator-class'          => 'Order Number Generator',
+            'show-search-input-field'               => 'Show Search Input Field',
             'allow-no-of-new-product-homepage'      => 'Allowed No of New Product in Homepage',
             'allow-no-of-featured-product-homepage' => 'Allowed No of Featured Product in Homepage',
-       ]
+            'width' => 'Width',
+            'height' => 'Height',
+            'cache-small-image' => 'Small Image',
+            'cache-medium-image' => 'Medium Image',
+            'cache-large-image' => 'Large Image',
+        ]
     ]
 ];
