@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers;
 use Illuminate\Http\Request;
 /*
@@ -14,9 +15,10 @@ use Illuminate\Http\Request;
 
 
 //smart registration
-Route::get('mlm-registration',function(){
-    return view('mlm-registration');
-});
+// Route::get('mlm-registration', function () {
+//     // dd(1);
+//     return view('mlm-registration');
+// });
 
 //Bug : Route does not direct controller
 //So controller code are put in route function
@@ -31,5 +33,6 @@ Route::get('mlm-registration',function(){
 // });
 
 //if user refresh 'smart-singup' page
-// Route::view('smart-singup', 'smart/smart-registration');
-
+// Route::get('smart-singup', function () {
+//     return view('resources/themes/velocity/views/customers/signup/index_smart.blade.php');
+// })->name('smart-signup');

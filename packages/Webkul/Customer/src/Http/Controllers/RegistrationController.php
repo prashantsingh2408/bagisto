@@ -56,8 +56,7 @@ class RegistrationController extends Controller
         CustomerRepository $customerRepository,
         CustomerGroupRepository $customerGroupRepository,
         SubscribersListRepository $subscriptionRepository
-    )
-    {
+    ) {
         $this->_config = request('_config');
 
         $this->customerRepository = $customerRepository;
@@ -75,6 +74,11 @@ class RegistrationController extends Controller
     public function show()
     {
         return view($this->_config['view']);
+    }
+    public function show_smart()
+    {
+        $customers = $this->customerRepository->select('id', 'email')->get();
+        return view($this->_config['view'], ['customers' => $customers]);
     }
 
     /**
@@ -106,7 +110,7 @@ class RegistrationController extends Controller
 
         Event::dispatch('customer.registration.after', $customer);
 
-        if (! $customer) {
+        if (!$customer) {
             session()->flash('error', trans('shop::app.customer.signup-form.failed'));
 
             return redirect()->back();
@@ -133,7 +137,101 @@ class RegistrationController extends Controller
                         'email' => $data['email'],
                         'token' => $token,
                     ]));
-                } catch (\Exception $e) { }
+                } catch (\Exception $e) {
+                }
+            }
+        }
+
+        if (core()->getConfigData('customer.settings.email.verification')) {
+            try {
+                if (core()->getConfigData('emails.general.notifications.emails.general.notifications.verification')) {
+                    Mail::queue(new VerificationEmail(['email' => $data['email'], 'token' => $data['token']]));
+                }
+
+                session()->flash('success', trans('shop::app.customer.signup-form.success-verify'));
+            } catch (\Exception $e) {
+                report($e);
+
+                session()->flash('info', trans('shop::app.customer.signup-form.success-verify-email-unsent'));
+            }
+        } else {
+            try {
+                if (core()->getConfigData('emails.general.notifications.emails.general.notifications.registration')) {
+                    Mail::queue(new RegistrationEmail(request()->all()));
+                }
+
+                session()->flash('success', trans('shop::app.customer.signup-form.success-verify'));
+            } catch (\Exception $e) {
+                report($e);
+
+                session()->flash('info', trans('shop::app.customer.signup-form.success-verify-email-unsent'));
+            }
+
+            session()->flash('success', trans('shop::app.customer.signup-form.success'));
+        }
+
+        return redirect()->route($this->_config['redirect']);
+    }
+
+    /**
+     * Method to store smart user's sign up form data to DB.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create_smart()
+    {
+        dd(request());
+        // $this->validate(request(), [
+        //     'first_name' => 'string|required',
+        //     'last_name'  => 'string|required',
+        //     'email'      => 'email|required|unique:customers,email',
+        //     'password'   => 'confirmed|min:6|required',
+        // ]);
+
+        // $data = array_merge(request()->input(), [
+        //     'password'          => bcrypt(request()->input('password')),
+        //     'api_token'         => Str::random(80),
+        //     'is_verified'       => core()->getConfigData('customer.settings.email.verification') ? 0 : 1,
+        //     'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id,
+        //     'token'             => md5(uniqid(rand(), true)),
+        //     'subscribed_to_news_letter' => isset(request()->input()['is_subscribed']) ? 1 : 0,
+        // ]);
+
+        Event::dispatch('customer.registration.before');
+
+        $customer = $this->customerRepository->create($data);
+
+        Event::dispatch('customer.registration.after', $customer);
+
+        if (!$customer) {
+            session()->flash('error', trans('shop::app.customer.signup-form.failed'));
+
+            return redirect()->back();
+        }
+
+        if (isset($data['is_subscribed'])) {
+            $subscription = $this->subscriptionRepository->findOneWhere(['email' => $data['email']]);
+
+            if ($subscription) {
+                $this->subscriptionRepository->update([
+                    'customer_id' => $customer->id,
+                ], $subscription->id);
+            } else {
+                $this->subscriptionRepository->create([
+                    'email'         => $data['email'],
+                    'customer_id'   => $customer->id,
+                    'channel_id'    => core()->getCurrentChannel()->id,
+                    'is_subscribed' => 1,
+                    'token'         => $token = uniqid(),
+                ]);
+
+                try {
+                    Mail::queue(new SubscriptionEmail([
+                        'email' => $data['email'],
+                        'token' => $token,
+                    ]));
+                } catch (\Exception $e) {
+                }
             }
         }
 

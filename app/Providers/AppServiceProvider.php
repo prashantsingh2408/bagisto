@@ -15,6 +15,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        // Custom code
+        $this->loadViewsFrom(resource_path('themes/velocity'), 'velocity');
     }
 
     /**
@@ -24,6 +27,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
     }
 }

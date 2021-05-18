@@ -107,7 +107,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         'redirect' => 'shop.home.index'
     ])->name('shop.reviews.store');
 
-     // Download file or image
+    // Download file or image
     Route::get('/product/{id}/{attribute_id}', 'Webkul\Shop\Http\Controllers\ProductController@download')->defaults('_config', [
         'view' => 'shop.products.index'
     ])->name('shop.product.file.download');
@@ -150,10 +150,25 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
             'view' => 'shop::customers.signup.index'
         ])->name('customer.register.index');
 
-        //registration form store
+        // registration form store
         Route::post('register', 'Webkul\Customer\Http\Controllers\RegistrationController@create')->defaults('_config', [
             'redirect' => 'customer.session.index',
         ])->name('customer.register.create');
+
+        // CUSTOM code
+
+        //registration form show
+        Route::get('register_smart', 'Webkul\Customer\Http\Controllers\RegistrationController@show_smart')->defaults('_config', [
+            'view' => 'shop::customers.signup.index_smart'
+        ])->name('customer.register.index_smart');
+
+        //smart registration form store
+        Route::post('register_smart', 'Webkul\Customer\Http\Controllers\RegistrationController@create_smart')->defaults('_config', [
+            'redirect' => 'customer.session.index_smart',
+        ])->name('customer.register.create_smart');
+
+
+        //CUSTOM code
 
         //verify account
         Route::get('/verify-account/{token}', 'Webkul\Customer\Http\Controllers\RegistrationController@verifyAccount')->name('customer.verify');
