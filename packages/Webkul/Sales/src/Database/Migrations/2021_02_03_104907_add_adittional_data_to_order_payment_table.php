@@ -14,7 +14,7 @@ class AddAdittionalDataToOrderPaymentTable extends Migration
     public function up()
     {
         Schema::table('order_payment', function (Blueprint $table) {
-            $table->json('additional')->after('order_id')->nullable();
+            $table->text('additional')->after('order_id')->nullable();
         });
     }
 

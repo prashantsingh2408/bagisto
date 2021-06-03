@@ -20,15 +20,15 @@ class CreateRefundItemsTable extends Migration
             $table->string('sku')->nullable();
             $table->integer('qty')->nullable();
 
-            $table->decimal('price', 12,4)->default(0);
-            $table->decimal('base_price', 12,4)->default(0);
+            $table->decimal('price', 12, 4)->default(0);
+            $table->decimal('base_price', 12, 4)->default(0);
 
-            $table->decimal('total', 12,4)->default(0);
-            $table->decimal('base_total', 12,4)->default(0);
+            $table->decimal('total', 12, 4)->default(0);
+            $table->decimal('base_total', 12, 4)->default(0);
 
-            $table->decimal('tax_amount', 12,4)->default(0)->nullable();
-            $table->decimal('base_tax_amount', 12,4)->default(0)->nullable();
-            
+            $table->decimal('tax_amount', 12, 4)->default(0)->nullable();
+            $table->decimal('base_tax_amount', 12, 4)->default(0)->nullable();
+
             $table->decimal('discount_percent', 12, 4)->default(0)->nullable();
             $table->decimal('discount_amount', 12, 4)->default(0)->nullable();
             $table->decimal('base_discount_amount', 12, 4)->default(0)->nullable();
@@ -38,14 +38,14 @@ class CreateRefundItemsTable extends Migration
 
             $table->integer('order_item_id')->unsigned()->nullable();
             $table->foreign('order_item_id')->references('id')->on('order_items')->onDelete('cascade');
-            
+
             $table->integer('refund_id')->unsigned()->nullable();
             $table->foreign('refund_id')->references('id')->on('refunds')->onDelete('cascade');
 
             $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('refund_items')->onDelete('cascade');
 
-            $table->json('additional')->nullable();
+            $table->text('additional')->nullable();
             $table->timestamps();
         });
     }

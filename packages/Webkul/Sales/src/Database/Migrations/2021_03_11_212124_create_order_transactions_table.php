@@ -19,7 +19,7 @@ class CreateOrderTransactionsTable extends Migration
             $table->string('status')->nullable();
             $table->string('type')->nullable();
             $table->string('payment_method')->nullable();
-            $table->json('data')->nullable();
+            $table->text('data')->nullable();
             $table->integer('invoice_id')->unsigned();
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
