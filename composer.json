@@ -146,6 +146,10 @@
             "vendor\\bin\\codecept.bat run unit",
             "vendor\\bin\\codecept.bat run functional",
             "vendor\\bin\\codecept.bat run trigger"
+        ],
+            "post-install-cmd": [
+            "php artisan clear-compiled",
+            "chmod -R 777 public/"
         ]
     },
     "config": {
