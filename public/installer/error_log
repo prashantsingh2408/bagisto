@@ -1,0 +1,5 @@
+[05-Jun-2021 15:34:33 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/installer/index.php on line 107
+[05-Jun-2021 15:35:18 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/installer/index.php on line 107
+[05-Jun-2021 15:35:55 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/installer/index.php on line 107
+[05-Jun-2021 17:25:23 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/installer/index.php on line 107
+[05-Jun-2021 17:28:23 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/installer/index.php on line 107

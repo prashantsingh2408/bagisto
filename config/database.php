@@ -54,6 +54,7 @@ return [
             'prefix' => env('DB_PREFIX'),
             'strict' => false,
             'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
+             'options'   => [PDO::ATTR_EMULATE_PREPARES => true],
         ],
 
         'pgsql' => [

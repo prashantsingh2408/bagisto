@@ -1,0 +1,18 @@
+[05-Jun-2021 15:34:32 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/installer/install.php on line 67
+[05-Jun-2021 15:34:32 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/obztskxlu7fb/public_html/shop.pegalogics.in/bootstrap/app.php:14
+Stack trace:
+#0 /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/index.php(82): require_once()
+#1 {main}
+  thrown in /home/obztskxlu7fb/public_html/shop.pegalogics.in/bootstrap/app.php on line 14
+[05-Jun-2021 17:25:22 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/installer/install.php on line 67
+[05-Jun-2021 17:25:22 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/obztskxlu7fb/public_html/shop.pegalogics.in/bootstrap/app.php:14
+Stack trace:
+#0 /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/index.php(82): require_once()
+#1 {main}
+  thrown in /home/obztskxlu7fb/public_html/shop.pegalogics.in/bootstrap/app.php on line 14
+[05-Jun-2021 17:28:22 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/installer/install.php on line 67
+[05-Jun-2021 17:28:22 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/obztskxlu7fb/public_html/shop.pegalogics.in/bootstrap/app.php:14
+Stack trace:
+#0 /home/obztskxlu7fb/public_html/shop.pegalogics.in/public/index.php(82): require_once()
+#1 {main}
+  thrown in /home/obztskxlu7fb/public_html/shop.pegalogics.in/bootstrap/app.php on line 14
