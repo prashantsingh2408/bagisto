@@ -23,8 +23,7 @@ class ProductImage extends AbstractProduct
      */
     public function __construct(
         ProductRepository $productRepository
-    )
-    {
+    ) {
         $this->productRepository = $productRepository;
     }
 
@@ -38,7 +37,7 @@ class ProductImage extends AbstractProduct
     {
         static $loadedGalleryImages = [];
 
-        if (! $product) {
+        if (!$product) {
             return [];
         }
 
@@ -49,19 +48,25 @@ class ProductImage extends AbstractProduct
         $images = [];
 
         foreach ($product->images as $image) {
-            if (! Storage::has($image->path)) {
+            if (!Storage::has($image->path)) {
                 continue;
             }
-
+            //custom change
+            // set image path to storage to fix img error
             $images[] = [
-                'small_image_url'    => url('cache/small/' . $image->path),
-                'medium_image_url'   => url('cache/medium/' . $image->path),
-                'large_image_url'    => url('cache/large/' . $image->path),
-                'original_image_url' => url('cache/original/' . $image->path),
+                // 'small_image_url'    => url('cache/small/' . $image->path),
+                'small_image_url'    => url('storage/' . $image->path),
+                // 'medium_image_url'   => url('cache/medium/' . $image->path),
+                'medium_image_url'   => url('storage/' . $image->path),
+                // 'large_image_url'    => url('cache/large/' . $image->path),
+                'large_image_url'    => url('storage/' . $image->path),
+                // 'original_image_url' => url('cache/original/' . $image->path),
+                'original_image_url' => url('storage/' . $image->path),
+
             ];
         }
 
-        if (! $product->parent_id && ! count($images) && ! count($product->videos)) {
+        if (!$product->parent_id && !count($images) && !count($product->videos)) {
             $images[] = [
                 'small_image_url'    => asset('vendor/webkul/ui/assets/images/product/small-product-placeholder.webp'),
                 'medium_image_url'   => asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.webp'),
@@ -126,7 +131,7 @@ class ProductImage extends AbstractProduct
         return $this->getProductBaseImage($product);
     }
 
-     /**
+    /**
      * Load product's base image.
      *
      * @param  \Webkul\Product\Contracts\Product|\Webkul\Product\Contracts\ProductFlat  $product
