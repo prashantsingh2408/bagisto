@@ -12,6 +12,8 @@ use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\Core\Repositories\SubscribersListRepository;
 use Cookie;
+use Webkul\Customer\Models\Customer;
+use Auth;
 
 class RegistrationController extends Controller
 {
@@ -77,6 +79,7 @@ class RegistrationController extends Controller
     }
     public function show_smart()
     {
+
         $customers = $this->customerRepository->select('id', 'email')->get();
         return view($this->_config['view'], ['customers' => $customers]);
     }
@@ -173,6 +176,7 @@ class RegistrationController extends Controller
         return redirect()->route($this->_config['redirect']);
     }
 
+    // custom code
     /**
      * Method to store smart user's sign up form data to DB.
      *
@@ -180,7 +184,25 @@ class RegistrationController extends Controller
      */
     public function create_smart()
     {
-        dd(request());
+        // dd(request()->member_1);
+
+        //Get current user
+        $customer = auth()->guard('customer')->user();
+        $id = $customer->id;
+
+        //Store child of current user
+        Customer::where('id', $id)
+            ->update(
+                [
+                    'child1' => request()->member_1,
+                    'child2' => request()->member_2,
+                    'child3' => request()->member_3,
+                    'child4' => request()->member_4,
+                    'child5' => request()->member_5
+                ]
+            );
+
+
         // $this->validate(request(), [
         //     'first_name' => 'string|required',
         //     'last_name'  => 'string|required',
@@ -197,71 +219,71 @@ class RegistrationController extends Controller
         //     'subscribed_to_news_letter' => isset(request()->input()['is_subscribed']) ? 1 : 0,
         // ]);
 
-        Event::dispatch('customer.registration.before');
+        // Event::dispatch('customer.registration.before');
 
-        $customer = $this->customerRepository->create($data);
+        // $customer = $this->customerRepository->create($data);
 
-        Event::dispatch('customer.registration.after', $customer);
+        // Event::dispatch('customer.registration.after', $customer);
 
-        if (!$customer) {
-            session()->flash('error', trans('shop::app.customer.signup-form.failed'));
+        // if (!$customer) {
+        //     session()->flash('error', trans('shop::app.customer.signup-form.failed'));
 
-            return redirect()->back();
-        }
+        //     return redirect()->back();
+        // }
 
-        if (isset($data['is_subscribed'])) {
-            $subscription = $this->subscriptionRepository->findOneWhere(['email' => $data['email']]);
+        // if (isset($data['is_subscribed'])) {
+        //     $subscription = $this->subscriptionRepository->findOneWhere(['email' => $data['email']]);
 
-            if ($subscription) {
-                $this->subscriptionRepository->update([
-                    'customer_id' => $customer->id,
-                ], $subscription->id);
-            } else {
-                $this->subscriptionRepository->create([
-                    'email'         => $data['email'],
-                    'customer_id'   => $customer->id,
-                    'channel_id'    => core()->getCurrentChannel()->id,
-                    'is_subscribed' => 1,
-                    'token'         => $token = uniqid(),
-                ]);
+        //     if ($subscription) {
+        //         $this->subscriptionRepository->update([
+        //             'customer_id' => $customer->id,
+        //         ], $subscription->id);
+        //     } else {
+        //         $this->subscriptionRepository->create([
+        //             'email'         => $data['email'],
+        //             'customer_id'   => $customer->id,
+        //             'channel_id'    => core()->getCurrentChannel()->id,
+        //             'is_subscribed' => 1,
+        //             'token'         => $token = uniqid(),
+        //         ]);
 
-                try {
-                    Mail::queue(new SubscriptionEmail([
-                        'email' => $data['email'],
-                        'token' => $token,
-                    ]));
-                } catch (\Exception $e) {
-                }
-            }
-        }
+        //         try {
+        //             Mail::queue(new SubscriptionEmail([
+        //                 'email' => $data['email'],
+        //                 'token' => $token,
+        //             ]));
+        //         } catch (\Exception $e) {
+        //         }
+        //     }
+        // }
 
-        if (core()->getConfigData('customer.settings.email.verification')) {
-            try {
-                if (core()->getConfigData('emails.general.notifications.emails.general.notifications.verification')) {
-                    Mail::queue(new VerificationEmail(['email' => $data['email'], 'token' => $data['token']]));
-                }
+        // if (core()->getConfigData('customer.settings.email.verification')) {
+        //     try {
+        //         if (core()->getConfigData('emails.general.notifications.emails.general.notifications.verification')) {
+        //             Mail::queue(new VerificationEmail(['email' => $data['email'], 'token' => $data['token']]));
+        //         }
 
-                session()->flash('success', trans('shop::app.customer.signup-form.success-verify'));
-            } catch (\Exception $e) {
-                report($e);
+        //         session()->flash('success', trans('shop::app.customer.signup-form.success-verify'));
+        //     } catch (\Exception $e) {
+        //         report($e);
 
-                session()->flash('info', trans('shop::app.customer.signup-form.success-verify-email-unsent'));
-            }
-        } else {
-            try {
-                if (core()->getConfigData('emails.general.notifications.emails.general.notifications.registration')) {
-                    Mail::queue(new RegistrationEmail(request()->all()));
-                }
+        //         session()->flash('info', trans('shop::app.customer.signup-form.success-verify-email-unsent'));
+        //     }
+        // } else {
+        //     try {
+        //         if (core()->getConfigData('emails.general.notifications.emails.general.notifications.registration')) {
+        //             Mail::queue(new RegistrationEmail(request()->all()));
+        //         }
 
-                session()->flash('success', trans('shop::app.customer.signup-form.success-verify'));
-            } catch (\Exception $e) {
-                report($e);
+        //         session()->flash('success', trans('shop::app.customer.signup-form.success-verify'));
+        //     } catch (\Exception $e) {
+        //         report($e);
 
-                session()->flash('info', trans('shop::app.customer.signup-form.success-verify-email-unsent'));
-            }
+        //         session()->flash('info', trans('shop::app.customer.signup-form.success-verify-email-unsent'));
+        //     }
 
-            session()->flash('success', trans('shop::app.customer.signup-form.success'));
-        }
+        //     session()->flash('success', trans('shop::app.customer.signup-form.success'));
+        // }
 
         return redirect()->route($this->_config['redirect']);
     }

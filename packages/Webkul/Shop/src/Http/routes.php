@@ -164,7 +164,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
 
         //smart registration form store
         Route::post('register_smart', 'Webkul\Customer\Http\Controllers\RegistrationController@create_smart')->defaults('_config', [
-            'redirect' => 'customer.session.index_smart',
+            'redirect' => 'customer.session.index',
         ])->name('customer.register.create_smart');
 
 
@@ -313,6 +313,12 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
                 Route::get('reviews/all-delete', 'Webkul\Shop\Http\Controllers\ReviewController@deleteAll')->defaults('_config', [
                     'redirect' => 'customer.reviews.index'
                 ])->name('customer.review.deleteall');
+
+                //Custom code
+                //MLM Routes
+                Route::get('MLM/index', 'Webkul\Shop\Http\Controllers\MLMController@index')->defaults('_config', [
+                    'view' => 'shop::customers.account.MLM.index'
+                ])->name('customer.MLM.index');
             });
         });
     });

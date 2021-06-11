@@ -27,6 +27,11 @@ class CustomerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerEloquentFactoriesFrom(__DIR__ . '/../Database/Factories');
+        // Custom code
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/menu.php',
+            'account.customer'
+        );
     }
 
     /**

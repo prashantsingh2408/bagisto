@@ -12,7 +12,8 @@ return [
         'reviews' => 'Reviews',
         'wishlist' => 'Wishlist',
         'orders' => 'Orders',
-        'downloadable-products' => 'Downloadable Products'
+        'downloadable-products' => 'Downloadable Products',
+        'MLM' => 'MLM'
     ],
 
     'common' => [
@@ -387,6 +388,16 @@ return [
 
                 'view' => [
                     'page-tile' => 'Review #:id',
+                ]
+            ],
+            'MLM' => [
+                'index' => [
+                    'title' => 'MLM',
+                    'page-title' => 'MLM'
+                ],
+
+                'view' => [
+                    'page-tile' => 'MLM #:id',
                 ]
             ]
         ]

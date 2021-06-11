@@ -33,6 +33,12 @@ class Customer extends Authenticatable implements CustomerContract, JWTSubject
         'token',
         'notes',
         'status',
+        'parent',
+        'child1',
+        'child2',
+        'child3',
+        'child4',
+        'child5'
     ];
 
     protected $hidden = ['password', 'api_token', 'remember_token'];
@@ -68,11 +74,11 @@ class Customer extends Authenticatable implements CustomerContract, JWTSubject
     }
 
     /**
-    * Send the password reset notification.
-    *
-    * @param  string  $token
-    * @return void
-    */
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new CustomerResetPassword($token));
@@ -128,7 +134,7 @@ class Customer extends Authenticatable implements CustomerContract, JWTSubject
 
     /**
      * get all reviews of a customer
-    */
+     */
     public function all_reviews()
     {
         return $this->hasMany(ProductReviewProxy::modelClass(), 'customer_id');
