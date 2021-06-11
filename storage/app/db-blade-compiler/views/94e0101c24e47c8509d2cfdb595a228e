@@ -1,0 +1,35 @@
+<p></p>
+<!--<div class="col-sm-7 col-lg-3">
+<div class="single-widget">
+<h2>About Shop</h2>
+<ul class="list-unstyle">
+<li><a href="#">Company Information</a></li>
+<li><a href="#">Careers</a></li>
+<li><a href="#">Store Location</a></li>
+<li><a href="#">Copyright</a></li>
+</ul>
+</div>
+</div>
+<div class="col-sm-7 col-lg-3">
+<div class="single-widget">
+<h2>Grocery Income</h2>
+<address>ABC Street, XYZ Building<br /> Sector 3, Noida - 201301</address><a><i class="fa fa-phone"></i> 123-456-7890</a><br /> <a><i class="fa fa-envelope"></i> Email@gmail.com</a></div>
+</div>
+-->
+<div class="col-lg-6 col-md-12 col-sm-12 no-padding">
+<ul type="none">
+<li><a href="<?php echo url('page/about-us'); ?>">About Us</a></li>
+<li><a href="<?php echo url('page/cutomer-service'); ?>">Customer Service</a></li>
+<li><a href="<?php echo url('page/whats-new'); ?>">What&rsquo;s New</a></li>
+<li><a href="<?php echo url('page/contact-us'); ?>">Contact Us </a></li>
+</ul>
+</div>
+<div class="col-lg-6 col-md-12 col-sm-12 no-padding">
+<ul type="none">
+<li><a href="<?php echo url('page/return-policy'); ?>"> Order and Returns </a></li>
+<li><a href="<?php echo url('page/payment-policy'); ?>"> Payment Policy </a></li>
+<li><a href="<?php echo url('page/shipping-policy'); ?>"> Shipping Policy</a></li>
+<li><a href="<?php echo url('page/privacy-policy'); ?>"> Privacy and Cookies Policy </a></li>
+</ul>
+</div>
+<p></p>

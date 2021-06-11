@@ -1,0 +1,15 @@
+<p><?php echo $__env->make('shop::home.category', ['category' => 'show-by-category'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?></p>
+<p><?php echo $__env->make('shop::home.advertisements.advertisement-three', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?></p>
+<p><?php echo $__env->make('shop::home.featured-products', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?></p>
+<p><?php echo $__env->make('shop::home.category', ['category' => 'show-by-brands'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?></p>
+<p><?php echo $__env->make('shop::home.advertisements.advertisement-four', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>&nbsp;</p>
+<p><?php echo $__env->make('shop::home.new-products', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?></p>
+<p><?php echo $__env->make('shop::home.product-policy', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
